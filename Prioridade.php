@@ -1,6 +1,6 @@
 <?php
 
-class Sjf extends Algoritimo
+class Prioridade extends Algoritimo
 {
     protected $preemptive;
 
@@ -13,17 +13,15 @@ class Sjf extends Algoritimo
 
     public function execute()
     {
-        parent::execute();
         echo "RESULTADO\n";
         $execucao = "";
-        ;
-        $this->atual_index = 0;
-        $this->atual_process = $this->processes[0];
+
+        $this->setNextProcess();
 
         do {
             if($this->atual_process->tempo_chegada <= $this->tempo && $this->atual_process->tempo_restante > 0){
                 $execucao .= "\n";
-                $execucao .= str_pad($this->tempo, 3, "0", 0) .": p" . ($this->atual_process->id + 1);
+                $execucao .= (str_pad($this->tempo, 3, "0", 0) . ": p") . ($this->atual_process->id + 1);
                 $this->atual_process->tempo_restante--;
 
                 if($this->atual_process->tempo_restante == 0)
@@ -46,8 +44,6 @@ class Sjf extends Algoritimo
             }
         } while($this->toBeProcessed > 0);
 
-
-//        var_dump($this->processes);
         foreach ($this->processes as $process) {
 
             $this->espera_total += $process->espera_tempo;
@@ -55,7 +51,9 @@ class Sjf extends Algoritimo
             $p = $process->id + 1;
 
             echo  "------------------------\n";
-            echo "ID : p$p EXECUÇÃO : $process->unidade_tempo ESPERA : $process->espera_tempo CHEGADA: $process->tempo_chegada  \n";
+            echo "ID : p$p EXECUÇÃO : $process->unidade_tempo ESPERA :".
+            "$process->espera_tempo CHEGADA: $process->tempo_chegada ".
+            "PRIORIDADE: $process->prioridade \n";
         }
 
         echo $execucao;
@@ -75,7 +73,7 @@ class Sjf extends Algoritimo
 
             if($this->tempo >= $process->tempo_chegada &&
                 $process->tempo_restante > 0 &&
-                $process->tempo_restante < $p-> tempo_restante){
+                $process->prioridade > $p->prioridade){
                 $p = $process;
                 $i = $k;
             }

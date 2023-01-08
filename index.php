@@ -3,6 +3,7 @@
 require "Fcfs.php";
 require "Sjf.php";
 require "Robin.php";
+require "Prioridade.php";
 require "Process.php";
 
 $gannt = new Gannt();
@@ -51,19 +52,19 @@ class Gannt {
             if($inputType == '1'){
                 if($i > 0) {
                     $tc += rand(1, 5);
-                    $prioridade += rand(20,50);
+                    $prioridade = rand(1,4);
                 }
                 $ut = rand(1,5);
 
             } else {
-                echo "Informe o tempo de execução para o processo (p" . $i+1 ."): ";
+                echo "Informe o tempo de execução para o processo (p" . ($i + 1) ."): ";
                 $ut = trim(fgets($this->handle));
 
-                echo "Informe o tempo de chegada para o processo (p" . $i+1 ."): ";
+                echo "Informe o tempo de chegada para o processo (p" . ($i + 1) ."): ";
                 $tc = trim(fgets($this->handle));
 
-//                echo "Informe a prioridade para o processo (p" . $i+1 ."): ";
-//                $prioridade = trim(fgets($this->handle));
+                echo "Informe a prioridade para o processo (p" . ($i + 1) ."): ";
+                $prioridade = trim(fgets($this->handle));
             }
 
             $this->processes[] = new Process($i, $ut, $tc, $prioridade);
@@ -88,27 +89,27 @@ class Gannt {
             switch ($inputType){
                 case 1:
                     $fcfs = new Fcfs($this->processes);
-                    $fcfs->start();
                     $fcfs->execute();
-                    $fcfs->conclude();
                     break;
                 case 2:
                     $sjf = new Sjf($this->newProcessess());
-                    $sjf->start();
                     $sjf->execute();
-                    $sjf->conclude();
                     break;
                 case 3:
                     $sjf = new Sjf($this->newProcessess(), true);
-                    $sjf->start();
                     $sjf->execute();
-                    $sjf->conclude();
                     break;
                 case 4:
-                    $rr = new Robin($this->newProcessess(), true);
-                    $rr->start();
+                    $rr = new Robin($this->newProcessess());
                     $rr->execute();
-                    $rr->conclude();
+                    break;
+                case 5:
+                    $pri = new Prioridade($this->newProcessess());
+                    $pri->execute();
+                    break;
+                case 6:
+                    $pri = new Prioridade($this->newProcessess(), true);
+                    $pri->execute();
                     break;
                 case 7: echo "Tcheu Tchau\n"; break;
                 default: echo "Função ainda não implementada\n"; break;

@@ -12,24 +12,5 @@ class Algoritimo
     protected $atual_process;
     protected $atual_index;
 
-    public function start(){
-
-    }
-
-    public function execute(){
-//        while (count($this->processes) > 0){
-//
-//        }
-    }
-
-    public function conclude(){
-
-    }
-
-    public function getProcessById($id){
-        foreach ($this->processes as $process){
-            if($process->id == $id)
-                return $process;
-        }
-    }
+    public function execute(){ }
 }
