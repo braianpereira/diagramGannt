@@ -8,6 +8,9 @@ class Algoritimo
     protected $saida = "";
 
     protected $processes = [];
+    protected $toBeProcessed;
+    protected $atual_process;
+    protected $atual_index;
 
     public function start(){
 
@@ -21,5 +24,12 @@ class Algoritimo
 
     public function conclude(){
 
+    }
+
+    public function getProcessById($id){
+        foreach ($this->processes as $process){
+            if($process->id == $id)
+                return $process;
+        }
     }
 }

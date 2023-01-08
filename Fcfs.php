@@ -15,7 +15,7 @@ class Fcfs extends Algoritimo
             $process->espera_tempo = $espera;
             $this->processes[$k] = $process;
 
-            $espera = $process->unidade_tempo;
+            $espera += $process->unidade_tempo;
         }
     }
 
@@ -37,7 +37,7 @@ class Fcfs extends Algoritimo
 //        var_dump($this->processes);
         foreach ($this->processes as $process) {
 
-            $this->espera_total += $this->espera_tempo;
+            $this->espera_total += $process->espera_tempo;
 
             $p = $process->id +1;
 
@@ -49,7 +49,7 @@ class Fcfs extends Algoritimo
         foreach ($this->processes as $process) {
             for ($i = 0; $i < $process->unidade_tempo; $i++) {
                 echo "\n";
-                echo "$this->tempo: p" . $process->id + 1;
+                echo str_pad($this->tempo, 3, "0", 0) .": p" . $process->id + 1;
                 $this->tempo++;
 
             }
